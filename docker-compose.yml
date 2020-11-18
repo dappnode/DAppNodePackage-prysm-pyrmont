@@ -20,7 +20,7 @@ services:
     build:
       context: validator
       args:
-        UPSTREAM_VERSION: v1.0.0-beta.0
+        UPSTREAM_VERSION: v1.0.0-beta.3
     volumes:
       - "validator-data:/root/"
     ports:
