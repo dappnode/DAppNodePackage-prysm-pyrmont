@@ -1,0 +1,134 @@
+{
+  "type": "object",
+  "properties": {
+    "accountValidatorList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/WalletAccount"
+      }
+    },
+    "accountWithdrawalList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/WalletAccount"
+      }
+    },
+    "accountWithdrawalCreate": {
+      "type": "null"
+    },
+    "accountValidatorCreate": {
+      "type": "null"
+    },
+    "getDepositData": {
+      "type": "string"
+    },
+    "eth1AccountGet": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "balance": {
+          "type": "number"
+        },
+        "insufficientFunds": {
+          "type": "boolean"
+        }
+      },
+      "required": ["address", "balance", "insufficientFunds"]
+    },
+    "eth1MakeDeposit": {
+      "type": ["null", "string"]
+    },
+    "validatorsStats": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ValidatorStats"
+      }
+    }
+  },
+  "definitions": {
+    "WalletAccount": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "uuid": {
+          "type": "string"
+        },
+        "publicKey": {
+          "type": "string"
+        },
+        "createdTimestamp": {
+          "type": "number"
+        }
+      },
+      "required": ["id", "name", "publicKey", "uuid"]
+    },
+    "ValidatorStats": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "uuid": {
+          "type": "string"
+        },
+        "publicKey": {
+          "type": "string"
+        },
+        "createdTimestamp": {
+          "type": "number"
+        },
+        "depositEvents": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/DepositEvent"
+          }
+        }
+      },
+      "required": ["depositEvents", "id", "name", "publicKey", "uuid"]
+    },
+    "DepositEvent": {
+      "type": "object",
+      "properties": {
+        "blockNumber": {
+          "type": "number"
+        },
+        "transactionHash": {
+          "type": "string"
+        },
+        "pubkey": {
+          "type": "string"
+        },
+        "withdrawal_credentials": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "signature": {
+          "type": "string"
+        },
+        "index": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "amount",
+        "index",
+        "pubkey",
+        "signature",
+        "withdrawal_credentials"
+      ]
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

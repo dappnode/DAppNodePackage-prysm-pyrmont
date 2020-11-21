@@ -28,11 +28,11 @@ ENTRYPOINT [ "sh", "-c", "exec beacon-chain \
   --pyrmont \
   --datadir=/data \
   --log-file=/data/beacon-chain.log \
-  --rpc-host 0.0.0.0 \
-  --grpc-gateway-host 0.0.0.0 \
-  --monitoring-host 0.0.0.0 \
+  --rpc-host=0.0.0.0 \
+  --grpc-gateway-host=0.0.0.0 \
+  --monitoring-host=0.0.0.0 \
   --http-web3provider=$HTTP_WEB3PROVIDER \
-  --grpc-gateway-port 3500 \
-  --grpc-gateway-corsdomain http://prysm-pyrmont-validator.dappnode \
+  --grpc-gateway-port=3500 \
+  --grpc-gateway-corsdomain=http://prysm-pyrmont-validator.dappnode,http://localhost:4200 \
   --accept-terms-of-use \
   $EXTRA_OPTS" ]
