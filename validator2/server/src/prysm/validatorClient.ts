@@ -32,7 +32,7 @@ export const prysmBinary = new Supervisor(
   {
     command: PRYSM_BINARY,
     options: {
-      medalla: true,
+      pyrmont: true,
       "monitoring-host": "0.0.0.0",
       "beacon-rpc-provider": beaconRpcProviderPrysm,
       datadir: PRYSM_DATA_DIR,

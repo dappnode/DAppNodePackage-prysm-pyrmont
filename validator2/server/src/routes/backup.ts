@@ -15,7 +15,7 @@ export const downloadKeystoresBackup: express.Handler = async (
   try {
     const keystoresBackup = prepareKeystoresBackup();
 
-    const filename = `medalla-validators-backup.zip`;
+    const filename = `pyrmont-validators-backup.zip`;
     const mimetype = "application/zip";
     res.setHeader("Content-disposition", "attachment; filename=" + filename);
     res.setHeader("Content-type", mimetype);

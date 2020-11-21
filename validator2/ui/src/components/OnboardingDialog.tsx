@@ -47,7 +47,7 @@ export function OnboardingDialog({
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        Prysm Medalla validator onboarding
+        Prysm Pyrmont validator onboarding
       </DialogTitle>
 
       <DialogContent className={classes.dialogContent}>

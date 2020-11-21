@@ -7,7 +7,7 @@ export const GRAFFITI = process.env.GRAFFITI || "";
 export const SHOW_ALL_VALIDATORS = true;
 
 /**
- * Medalla settings
+ * Pyrmont settings
  */
 export const DEPOSIT_CONTRACT_ADDRESS =
   "0x07b39F4fDE4A38bACe212b546dAc87C58DfE3fDC";
@@ -34,12 +34,12 @@ export const PRYSM_WALLET_DIR = "/prysm/.eth2validators/primary";
 export const PRYSM_WALLET_PASSWORD_PATH = "/prysm/.eth2validators/primary.pass";
 export const PRYSM_LOG_FILE = "/var/log/validator.log";
 export const PRYSM_REST_APIURL =
-  "http://prysm-medalla-beacon-chain.dappnode:3500";
+  "http://prysm-pyrmont-beacon-chain.dappnode:3500";
 export const PRYSM_VALIDATOR_APIRUL =
-  "http://prysm-medalla-beacon-chain.dappnode:4000";
+  "http://prysm-pyrmont-beacon-chain.dappnode:4000";
 export const PRYSM_EXTRA_OPTS = process.env.PRYSM_EXTRA_OPTS || "";
 export const PRYSM_VERBOSITY = process.env.PRYSM_VERBOSITY || "info";
-export const PRYSM_DNPNAME = "prysm-medalla-beacon-chain.dnp.dappnode.eth";
+export const PRYSM_DNPNAME = "prysm-pyrmont-beacon-chain.dnp.dappnode.eth";
 export const PRYSM_INSTALL_URL = INSTALL_DNP_URL + PRYSM_DNPNAME;
 
 /**

@@ -11,4 +11,4 @@ export const validatorCost = 32.1;
 
 // Help links
 export const packageAdminConfigPage =
-  "http://my.dappnode/#/packages/medalla-validator.dnp.dappnode.eth/config";
+  "http://my.dappnode/#/packages/pyrmont-validator.dnp.dappnode.eth/config";

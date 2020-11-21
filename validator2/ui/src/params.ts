@@ -10,7 +10,7 @@ import {
 export const PUBLIC_PACKAGES_APIURL = "http://my.dappnode/public-packages";
 export const DNP_NAME_DMS = "dms.dnp.dappnode.eth";
 export const PACKAGE_DNP_URL = "http://my.dappnode/#/packages/";
-export const EF_LAUNCHPAD_URL = "https://medalla.launchpad.ethereum.org/";
+export const EF_LAUNCHPAD_URL = "https://pyrmont.launchpad.ethereum.org/";
 
 // Modifiable params
 

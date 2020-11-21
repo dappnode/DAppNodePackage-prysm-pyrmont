@@ -59,18 +59,18 @@ export const sideNameSecondaryItems = [
   {
     name: "Metrics",
     Icon: BarChartIcon,
-    href: "http://dms.dappnode/d/DNPE2PAD/dappnode-eth-2-0-medalla-dashboard",
+    href: "http://dms.dappnode/d/DNPE2PAD/dappnode-eth-2-0-pyrmont-dashboard",
   },
   {
     name: "Nodes",
     Icon: LayersIcon,
-    href: "https://eth2stats.io/medalla-testnet",
+    href: "https://eth2stats.io/pyrmont-testnet",
   },
   {
     name: "Logs",
     Icon: AssignmentIcon,
     href:
-      "http://my.dappnode/#/packages/medalla-validator.dnp.dappnode.eth/logs",
+      "http://my.dappnode/#/packages/pyrmont-validator.dnp.dappnode.eth/logs",
   },
   {
     name: "Support",
@@ -219,7 +219,7 @@ export const Layout: React.FC<{
           <Link to={paths.home} className={classes.mainLogo}>
             <img src={dappnodeLogo} className={classes.topBarLogo} alt="logo" />
             <Typography component="h1" variant="h6" color="inherit" noWrap>
-              Prysm Medalla validator
+              Prysm Pyrmont validator
             </Typography>
           </Link>
 
