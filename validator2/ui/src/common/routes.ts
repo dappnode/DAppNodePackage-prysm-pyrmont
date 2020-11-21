@@ -21,7 +21,7 @@ export interface Routes {
   /**
    * Import validator keystores and passphrases
    */
-  importValidators: (validators: ValidatorFiles[]) => Promise<void>;
+  importValidators: (validators: ValidatorFiles) => Promise<void>;
 }
 
 export const routesData: { [P in keyof Routes]: {} } = {

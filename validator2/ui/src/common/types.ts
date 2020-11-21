@@ -12,8 +12,7 @@ export interface ValidatorStats {
 }
 
 export interface ValidatorFiles {
-  pubkey: string;
-  keystore: Eth2Keystore;
+  keystores: Eth2Keystore[];
   passphrase: string;
 }
 

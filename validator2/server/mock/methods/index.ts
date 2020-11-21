@@ -66,7 +66,7 @@ export async function nodeStats(): Promise<NodeStats> {
 }
 
 export async function importValidators(
-  validators: ValidatorFiles[]
+  validators: ValidatorFiles
 ): Promise<void> {
   await waitMs(5000);
   // eslint-disable-next-line no-console

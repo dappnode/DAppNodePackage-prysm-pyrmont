@@ -1,11 +1,10 @@
 import fs from "fs";
 import path from "path";
-import { exec } from "child_process";
+import { exec, spawn } from "child_process";
 import { promisify } from "util";
 import rimraf from "rimraf";
 import dargs from "dargs";
 import { getLogger } from "../logs";
-import { ValidatorPaths } from "./keystoreManager";
 import { Supervisor, getRandomToken, ensureDirFromFilePath } from "../utils";
 import {
   PRYSM_BINARY,
@@ -18,6 +17,7 @@ import {
   GRAFFITI,
   PRYSM_VALIDATOR_APIRUL
 } from "../params";
+import { ValidatorFiles } from "../../common";
 
 const binaryLogger = getLogger({ location: "prysm" });
 const keyMgrLogger = getLogger({ location: "prysm keystore manager" });
@@ -92,7 +92,16 @@ export const prysmKeystoreManager = {
     // );
   },
 
+  async getPubkeys(): Promise<string[]> {
+    return [];
+  },
+
+  // Stream prysm backup command directly to express.res
+  async getBackup(): Promise<Zip> {},
+
   /**
+   * Import multiple validators with the same secret
+   *
    * ```
    * ./prysm.sh validator accounts import
    *   --wallet-dir /prysm/.eth2validators/primary
@@ -103,27 +112,36 @@ export const prysmKeystoreManager = {
    * ```
    * [validator-v1.0.0-alpha.29-linux-amd64]
    */
-  async importKeystores(validatorsPaths: ValidatorPaths[]): Promise<void> {
+  async importKeystores(files: ValidatorFiles): Promise<void> {
     if (!fs.existsSync(PRYSM_WALLET_PASSWORD_PATH)) {
       ensureDirFromFilePath(PRYSM_WALLET_PASSWORD_PATH);
       fs.writeFileSync(PRYSM_WALLET_PASSWORD_PATH, getPrysmPassword());
       keyMgrLogger.info(`Wrote wallet password: ${PRYSM_WALLET_PASSWORD_PATH}`);
     }
 
-    // Necessary to create a wallet?
+    // Necessary to create a wallet? YES!
 
-    for (const { pubkey, keystorePath, secretPath } of validatorsPaths) {
+    // Write all keystores to the same dir
+    const tmpKeystoreDir = fs.mkdtempSync("prysm-import");
+
+    files.keystores.forEach((keystore, i) => {
       // Prysm expects keystores to have the eth2-cli name format
       // keystore-m_12381_3600_0_0_0-1595959302
-      const tmpKeystoreDir = fs.mkdtempSync(`prysm-import-${pubkey}`);
-      const unixSec = Math.floor(Date.now() / 1000);
-      const eth2CliName = `keystore-m_12381_3600_0_0_0-${unixSec}.json`;
-      const tmpKeystorePath = path.join(tmpKeystoreDir, eth2CliName);
-      fs.copyFileSync(keystorePath, tmpKeystorePath);
 
-      // This command will only import 1 account MAX, so it's okay to use exec
-      // The output will never be too long and it will last for < 20 sec
-      const { stdout, stderr } = await promisify(exec)(
+      const unixSec = Math.floor(Date.now() / 1000);
+      const eth2CliName = `keystore-m_12381_3600_0_0_${i}-${unixSec}.json`;
+      const tmpKeystorePath = path.join(tmpKeystoreDir, eth2CliName);
+      const jsonString = JSON.stringify(keystore, null, 2);
+      fs.writeFileSync(tmpKeystorePath, jsonString);
+    });
+
+    // Write secret to path
+    const secretPath = path.join(tmpKeystoreDir, "secret.txt");
+    fs.writeFileSync(secretPath, files.passphrase);
+
+    // This command may run for really long, +20min. Must use spawn and pipe outputs
+    await new Promise((resolve, reject) => {
+      const child = spawn(
         [
           PRYSM_BINARY,
           "accounts",
@@ -139,18 +157,24 @@ export const prysmKeystoreManager = {
         ].join(" ")
       );
 
-      if (stdout.includes("imported 0 accounts"))
-        throw Error(
-          `cmd 'prysm accounts import' failed to import keystore from ${tmpKeystoreDir}: ${stdout}`
-        );
+      child.stdout.pipe(process.stdout);
+      child.stderr.pipe(process.stderr);
 
-      await promisify(rimraf)(tmpKeystoreDir);
+      child.once("exit", (code: number, signal: string) => {
+        if (code === 0) {
+          resolve(undefined);
+        } else {
+          reject(new Error("Exit with error code: " + code));
+        }
+      });
+      child.once("error", (err: Error) => {
+        reject(err);
+      });
+    });
 
-      keyMgrLogger.info(
-        `Imported ${pubkey} keystore to wallet ${PRYSM_WALLET_DIR}`,
-        { stdout, stderr }
-      );
-    }
+    await promisify(rimraf)(tmpKeystoreDir);
+
+    keyMgrLogger.info(`Imported keystores to wallet ${PRYSM_WALLET_DIR}`);
   },
 
   async deleteKeystores(): Promise<void> {

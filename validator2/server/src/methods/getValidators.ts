@@ -7,7 +7,7 @@ import { computeExpectedBalance } from "../utils";
 import { requestPastDepositEvents } from "../services/eth1";
 import {
   prysmBeaconNodeClient,
-  keystoreManager,
+  prysmKeystoreManager,
   ValidatorStatusByPubkey
 } from "../prysm";
 import { logs } from "../logs";
@@ -42,8 +42,7 @@ export async function getValidators(): Promise<ValidatorStats[]> {
     logs.error(`Error requesting past deposit events`, e);
   });
 
-  const validators = await keystoreManager.readKeystores();
-  const pubkeys = validators.map(v => v.pubkey);
+  const pubkeys = await prysmKeystoreManager.getPubkeys();
   const statusByPubkey = await getValidatorStatusMem(pubkeys).catch(e =>
     logs.error(`Error fetching validators balances`, e)
   );

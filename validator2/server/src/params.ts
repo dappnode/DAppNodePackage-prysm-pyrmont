@@ -20,12 +20,6 @@ export const VALIDATOR_KEYSTORES_DIR = "/validators/keystores";
 export const VALIDATOR_SECRETS_DIR = "/validators/secrets";
 
 /**
- * DAppNode URLs
- */
-const INSTALL_DNP_URL = "http://my.dappnode/#/installer/";
-const PACKAGE_DNP_URL = "http://my.dappnode/#/packages/";
-
-/**
  * Prysm config and paths
  */
 export const PRYSM_BINARY = "validator";
@@ -39,15 +33,6 @@ export const PRYSM_VALIDATOR_APIRUL =
   "http://prysm-pyrmont-beacon-chain.dappnode:4000";
 export const PRYSM_EXTRA_OPTS = process.env.PRYSM_EXTRA_OPTS || "";
 export const PRYSM_VERBOSITY = process.env.PRYSM_VERBOSITY || "info";
-export const PRYSM_DNPNAME = "prysm-pyrmont-beacon-chain.dnp.dappnode.eth";
-export const PRYSM_INSTALL_URL = INSTALL_DNP_URL + PRYSM_DNPNAME;
-
-/**
- * DAppNode / DAPPMANAGER params
- */
-export const PUBLIC_PACKAGES_APIURL = "http://my.dappnode/public-packages";
-export const DMS_DNPNAME = "dms.dnp.dappnode.eth";
-export const DMS_INSTALL_LINK = INSTALL_DNP_URL + DMS_DNPNAME;
 
 // Login password
 export const adminPassword = process.env.PASSWORD;
