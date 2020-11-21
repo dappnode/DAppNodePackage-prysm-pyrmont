@@ -36,7 +36,6 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import { FooterNote } from "./components/FooterNote";
 import { paths } from "paths";
 import { newTabProps, noAStyle } from "utils";
-import { useApi } from "api/rpc";
 
 const sideNavMainItems = [
   {
@@ -56,39 +55,29 @@ const sideNavMainItems = [
   },
 ];
 
-function getSideNameSecondaryItems({
-  isDmsInstalled,
-}: {
-  isDmsInstalled: boolean | null;
-}) {
-  return [
-    {
-      name: "Metrics",
-      Icon: BarChartIcon,
-      href: "http://dms.dappnode/d/DNPE2PAD/dappnode-eth-2-0-medalla-dashboard",
-      show: isDmsInstalled === true,
-    },
-    {
-      name: "Nodes",
-      Icon: LayersIcon,
-      href: "https://eth2stats.io/medalla-testnet",
-      show: true,
-    },
-    {
-      name: "Logs",
-      Icon: AssignmentIcon,
-      href:
-        "http://my.dappnode/#/packages/medalla-validator.dnp.dappnode.eth/logs",
-      show: true,
-    },
-    {
-      name: "Support",
-      Icon: PeopleIcon,
-      href: "https://riot.im/app/#/room/#DAppNode:matrix.org",
-      show: true,
-    },
-  ].filter((item) => item.show);
-}
+export const sideNameSecondaryItems = [
+  {
+    name: "Metrics",
+    Icon: BarChartIcon,
+    href: "http://dms.dappnode/d/DNPE2PAD/dappnode-eth-2-0-medalla-dashboard",
+  },
+  {
+    name: "Nodes",
+    Icon: LayersIcon,
+    href: "https://eth2stats.io/medalla-testnet",
+  },
+  {
+    name: "Logs",
+    Icon: AssignmentIcon,
+    href:
+      "http://my.dappnode/#/packages/medalla-validator.dnp.dappnode.eth/logs",
+  },
+  {
+    name: "Support",
+    Icon: PeopleIcon,
+    href: "https://riot.im/app/#/room/#DAppNode:matrix.org",
+  },
+];
 
 const drawerWidth = 240;
 
@@ -202,11 +191,6 @@ export const Layout: React.FC<{
     setOpen(false);
   };
 
-  const appSettings = useApi.getSettings();
-  const isDmsInstalled = Boolean(
-    appSettings.data?.dmsDnp.status === "installed"
-  );
-
   const classes = useStyles();
 
   return (
@@ -276,7 +260,7 @@ export const Layout: React.FC<{
         <List>
           <div>
             <ListSubheader inset>Help</ListSubheader>
-            {ListItems(getSideNameSecondaryItems({ isDmsInstalled }))}
+            {ListItems(sideNameSecondaryItems)}
           </div>
         </List>
       </Drawer>

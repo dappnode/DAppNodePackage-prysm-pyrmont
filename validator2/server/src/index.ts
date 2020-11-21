@@ -1,9 +1,8 @@
 import { logs } from "./logs";
 import app from "./app";
-import * as db from "./db";
 import { listenToDepositEvents } from "./services/eth1";
-import { printGitData } from "./services/printGitData";
-import { getClient } from "./services/validatorClient";
+import { prysmBinary } from "./prysm";
+import { printGitData } from "./utils/printGitData";
 
 // Connect to a Eth1.x node
 listenToDepositEvents();
@@ -11,17 +10,10 @@ listenToDepositEvents();
 printGitData();
 
 // Start validator binary if ready
-const currentClient = db.server.validatorClient.get();
-if (currentClient) {
-  getClient(currentClient)
-    .restart()
-    .then(
-      () => logs.info(`Started validator client ${currentClient}`),
-      e => logs.error(`Error starting validator client`, e)
-    );
-} else {
-  logs.info(`No validator client selected yet`);
-}
+prysmBinary.restart().then(
+  () => logs.info("Started validator client"),
+  e => logs.error("Error starting validator client", e)
+);
 
 /**
  * Start Express server.

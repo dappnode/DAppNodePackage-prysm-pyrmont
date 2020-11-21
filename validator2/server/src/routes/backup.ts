@@ -1,7 +1,7 @@
 import fs from "fs";
 import express from "express";
 import AdmZip from "adm-zip";
-import { keystoreManager } from "../services/keystoreManager";
+import { keystoreManager } from "../prysm";
 import { logs } from "../logs";
 
 /**

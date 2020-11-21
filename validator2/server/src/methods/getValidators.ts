@@ -1,29 +1,27 @@
 import memoizee from "memoizee";
 import { ethers } from "ethers";
 import * as db from "../db";
-import { ValidatorStats, DepositEvent, BeaconProviderName } from "../../common";
+import { ValidatorStats, DepositEvent } from "../../common";
 import { SHOW_ALL_VALIDATORS } from "../params";
 import { computeExpectedBalance } from "../utils";
 import { requestPastDepositEvents } from "../services/eth1";
 import {
-  getBeaconNodeClient,
+  prysmBeaconNodeClient,
+  keystoreManager,
   ValidatorStatusByPubkey
-} from "../services/beaconNode";
+} from "../prysm";
 import { logs } from "../logs";
-import { keystoreManager } from "../services/keystoreManager";
 
 async function getValidatorStatus(
-  beaconNode: BeaconProviderName,
   pubkeys: string[]
 ): Promise<ValidatorStatusByPubkey> {
-  const beaconNodeClient = getBeaconNodeClient(beaconNode);
-  const syncingStatus = await beaconNodeClient.syncing();
+  const syncingStatus = await prysmBeaconNodeClient.syncing();
   // > operator works with strings
   const isSyncing = parseInt(syncingStatus.sync_distance) > 0;
   if (isSyncing) {
     return {};
   } else {
-    return await beaconNodeClient.validators(pubkeys);
+    return await prysmBeaconNodeClient.validators(pubkeys);
   }
 }
 
@@ -31,7 +29,7 @@ const getValidatorStatusMem = memoizee(getValidatorStatus, {
   maxAge: 12 * 1000,
   promise: true,
   // Cache by contents of pubKeys not by the array containing it
-  normalizer: ([beaconNode, pubkeys]) => beaconNode + pubkeys.sort().join("")
+  normalizer: ([pubkeys]) => pubkeys.sort().join("")
 });
 
 /**
@@ -39,8 +37,6 @@ const getValidatorStatusMem = memoizee(getValidatorStatus, {
  * Only show validators that have a confirmed deposit
  */
 export async function getValidators(): Promise<ValidatorStats[]> {
-  const beaconNode = db.server.beaconProvider.get();
-
   // Keep fetching logs in the background only when UI is connected
   requestPastDepositEvents().catch(e => {
     logs.error(`Error requesting past deposit events`, e);
@@ -48,11 +44,9 @@ export async function getValidators(): Promise<ValidatorStats[]> {
 
   const validators = await keystoreManager.readKeystores();
   const pubkeys = validators.map(v => v.pubkey);
-  const statusByPubkey = beaconNode
-    ? await getValidatorStatusMem(beaconNode, pubkeys).catch(e =>
-        logs.error(`Error fetching validators balances`, e)
-      )
-    : {};
+  const statusByPubkey = await getValidatorStatusMem(pubkeys).catch(e =>
+    logs.error(`Error fetching validators balances`, e)
+  );
 
   return pubkeys
     .map(

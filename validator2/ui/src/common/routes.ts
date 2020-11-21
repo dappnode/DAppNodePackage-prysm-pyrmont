@@ -2,9 +2,6 @@ import {
   ValidatorStats,
   NodeStats,
   ValidatorFiles,
-  ValidatorClientName,
-  AppSettings,
-  BeaconProviderName,
   ChildProcessStatus,
 } from "./types";
 
@@ -25,18 +22,6 @@ export interface Routes {
    * Import validator keystores and passphrases
    */
   importValidators: (validators: ValidatorFiles[]) => Promise<void>;
-  /**
-   * Returns configurable app parameters
-   */
-  getSettings: () => Promise<AppSettings>;
-  /**
-   * Switch validator client. Kills current one and starts next after exit
-   */
-  switchValidatorClient: (newClient: ValidatorClientName) => Promise<void>;
-  /**
-   * Set the beaconProvider (name or URL) setting
-   */
-  setBeaconProvider: (newBeaconProvider: BeaconProviderName) => Promise<void>;
 }
 
 export const routesData: { [P in keyof Routes]: {} } = {
@@ -44,9 +29,6 @@ export const routesData: { [P in keyof Routes]: {} } = {
   getValidators: {},
   nodeStats: {},
   importValidators: {},
-  getSettings: {},
-  switchValidatorClient: {},
-  setBeaconProvider: {},
 };
 
 // DO NOT REMOVE

@@ -11,7 +11,7 @@ import {
   TableContainer,
   makeStyles,
 } from "@material-ui/core";
-import { api, useApi } from "api/rpc";
+import { api } from "api/rpc";
 import mapValues from "lodash/mapValues";
 import { ValidatorFiles, Eth2Keystore } from "common";
 import { RequestStatus } from "types";
@@ -76,7 +76,6 @@ export function ValidatorsImportFiles() {
   >({});
   const [loadingFiles, setLoadingFiles] = useState<string>();
   const [importStatus, setImportStatus] = useState<RequestStatus<string>>({});
-  const appSettings = useApi.getSettings();
 
   const addKeystore = useCallback(
     (pubkey: string, keystore: Eth2Keystore) => {
@@ -266,14 +265,13 @@ export function ValidatorsImportFiles() {
         </TableContainer>
       )}
 
-      {importStatus.loading &&
-        appSettings.data?.validatorClient === "prysm" && (
-          <Alert severity="warning">
-            Importing validators may take a while (5-20 sec / validator).
-            Estimated{" "}
-            {parseDateDiff(Object.values(validators).length * 10 * 1000)}
-          </Alert>
-        )}
+      {importStatus.loading && (
+        <Alert severity="warning">
+          Importing validators may take a while (5-20 sec / validator).
+          Estimated{" "}
+          {parseDateDiff(Object.values(validators).length * 10 * 1000)}
+        </Alert>
+      )}
 
       {importStatus.result && (
         <Alert severity="success">Successfully imported validators</Alert>

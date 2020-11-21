@@ -2,11 +2,7 @@ import path from "path";
 import fs from "fs";
 import { createLowDb } from "./lowDb";
 import { createDb, collection, regular } from "./dbAdaptor";
-import {
-  DepositEvents,
-  ValidatorClientName,
-  BeaconProviderName
-} from "../../common";
+import { DepositEvents } from "../../common";
 import { getRandomToken } from "../utils";
 import { dbDir, dataPath } from "../params";
 import { logs } from "../logs";
@@ -25,9 +21,7 @@ try {
 }
 
 export const server = createDb(createLowDb(serverDbPath), {
-  sessionsSecret: regular<string>(),
-  validatorClient: regular<ValidatorClientName>(),
-  beaconProvider: regular<BeaconProviderName>()
+  sessionsSecret: regular<string>()
 });
 
 export const accounts = createDb(createLowDb(accountsDbPath), {

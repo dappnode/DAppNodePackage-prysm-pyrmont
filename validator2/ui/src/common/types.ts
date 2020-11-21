@@ -1,15 +1,3 @@
-// Server types
-
-export type ValidatorClientName = "lighthouse" | "prysm";
-export type BeaconProviderName = "lighthouse" | "prysm";
-
-export interface AppSettings {
-  validatorClient: ValidatorClientName | undefined;
-  beaconProvider: BeaconProviderName | undefined;
-  beaconDnps: { [key in BeaconProviderName]: DnpInstalledStatus };
-  dmsDnp: DnpInstalledStatus;
-}
-
 // Table type
 
 export interface ValidatorStats {

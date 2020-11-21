@@ -6,23 +6,18 @@ import { ValidatorStatsTable } from "components/ValidatorStatsTable";
 import { NodeStatsView } from "components/NodeStats";
 import { TotalBalance } from "components/TotalBalance";
 import { OnboardingDialog } from "components/OnboardingDialog";
-import { ValidatorClientView } from "components/ValidatorClientView";
 import { parseIsSyncing } from "utils/syncing";
 
 export function Home() {
   const [onboardingOpen, setOnboardingOpen] = useState(false);
   const validators = useApi.getValidators();
   const nodeStats = useApi.nodeStats();
-  const appSettings = useApi.getSettings();
 
   const noValidators = validators.data && validators.data.length === 0;
-  const noClientSelected =
-    appSettings.data && !appSettings.data.validatorClient;
-  const firstBoot = noValidators && noClientSelected;
 
   useEffect(() => {
-    if (firstBoot) setOnboardingOpen(true);
-  }, [firstBoot]);
+    if (noValidators) setOnboardingOpen(true);
+  }, [noValidators]);
 
   return (
     <>
@@ -40,16 +35,9 @@ export function Home() {
       </LayoutItem>
       {nodeStats.data && (
         <LayoutItem sm={6}>
-          <NodeStatsView
-            nodeStats={nodeStats.data}
-            appSettings={appSettings.data}
-          />
+          <NodeStatsView nodeStats={nodeStats.data} />
         </LayoutItem>
       )}
-
-      <LayoutItem>
-        <ValidatorClientView appSettings={appSettings} />
-      </LayoutItem>
 
       <LayoutItem>
         <ValidatorStatsTable
@@ -58,12 +46,10 @@ export function Home() {
         />
       </LayoutItem>
 
-      {appSettings.data && (
-        <OnboardingDialog
-          open={onboardingOpen}
-          onClose={() => setOnboardingOpen(false)}
-        ></OnboardingDialog>
-      )}
+      <OnboardingDialog
+        open={onboardingOpen}
+        onClose={() => setOnboardingOpen(false)}
+      ></OnboardingDialog>
     </>
   );
 }

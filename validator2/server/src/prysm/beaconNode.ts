@@ -3,6 +3,14 @@ import fetch from "node-fetch";
 import querystring from "querystring";
 import { urlJoin, parseFetchJson } from "../utils";
 
+export type ValidatorStatusByPubkey = { [pubKey: string]: ValidatorStatus };
+
+export interface BeaconNodeClient {
+  peers(): Promise<string[]>;
+  syncing(): Promise<SyncStatus>;
+  validators(pubKeys: string[]): Promise<ValidatorStatusByPubkey>;
+}
+
 export class PrysmBeaconNodeClient {
   grpcGatewayUrl: string;
   // TODO: Fetch from config

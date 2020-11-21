@@ -6,12 +6,7 @@ import rimraf from "rimraf";
 import dargs from "dargs";
 import { getLogger } from "../logs";
 import { ValidatorPaths } from "./keystoreManager";
-import {
-  Supervisor,
-  getBeaconProviderUrl,
-  getRandomToken,
-  ensureDirFromFilePath
-} from "../utils";
+import { Supervisor, getRandomToken, ensureDirFromFilePath } from "../utils";
 import {
   PRYSM_BINARY,
   PRYSM_VERBOSITY,
@@ -20,11 +15,18 @@ import {
   PRYSM_DATA_DIR,
   PRYSM_WALLET_DIR,
   PRYSM_WALLET_PASSWORD_PATH,
-  GRAFFITI
+  GRAFFITI,
+  PRYSM_VALIDATOR_APIRUL
 } from "../params";
 
 const binaryLogger = getLogger({ location: "prysm" });
 const keyMgrLogger = getLogger({ location: "prysm keystore manager" });
+
+// Prysm does not want the protocol in the beacon URL
+const beaconRpcProviderPrysm = PRYSM_VALIDATOR_APIRUL.replace(
+  /^https?:\/\//,
+  ""
+);
 
 export const prysmBinary = new Supervisor(
   {
@@ -32,7 +34,7 @@ export const prysmBinary = new Supervisor(
     options: {
       medalla: true,
       "monitoring-host": "0.0.0.0",
-      "beacon-rpc-provider": getBeaconProviderUrlPrysm(),
+      "beacon-rpc-provider": beaconRpcProviderPrysm,
       datadir: PRYSM_DATA_DIR,
       "wallet-dir": PRYSM_WALLET_DIR,
       "wallet-password-file": PRYSM_WALLET_PASSWORD_PATH,
@@ -46,7 +48,7 @@ export const prysmBinary = new Supervisor(
     // No typing necessary, Supervisor instance makes sure it's correct
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     dynamicOptions: () => ({
-      "beacon-rpc-provider": getBeaconProviderUrlPrysm()
+      "beacon-rpc-provider": beaconRpcProviderPrysm
     })
   },
   {
@@ -156,14 +158,6 @@ export const prysmKeystoreManager = {
     keyMgrLogger.info(`Deleted all files in ${PRYSM_WALLET_DIR}`);
   }
 };
-
-/**
- * Prysm does not want the protocol in the beacon URL
- */
-function getBeaconProviderUrlPrysm(): string {
-  const url = getBeaconProviderUrl();
-  return url.replace(/^https?:\/\//, "");
-}
 
 /**
  * Return a password compatible with Prysm requirements

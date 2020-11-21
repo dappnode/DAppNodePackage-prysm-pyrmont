@@ -1,15 +1,9 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
 import { Title } from "./Title";
-import { NodeStats, AppSettings } from "common";
+import { NodeStats } from "common";
 
-export function NodeStatsView({
-  nodeStats,
-  appSettings,
-}: {
-  nodeStats: NodeStats;
-  appSettings?: AppSettings;
-}) {
+export function NodeStatsView({ nodeStats }: { nodeStats: NodeStats }) {
   return (
     <>
       <Title>Node stats</Title>
@@ -24,9 +18,6 @@ export function NodeStatsView({
       </Typography>
       <Typography>
         Peers: <strong>{nodeStats.peers ? nodeStats.peers.length : "?"}</strong>
-      </Typography>
-      <Typography>
-        Node: <strong>{appSettings?.beaconProvider}</strong>
       </Typography>
     </>
   );

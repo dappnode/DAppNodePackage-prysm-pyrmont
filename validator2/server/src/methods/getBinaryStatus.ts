@@ -1,9 +1,6 @@
 import { ChildProcessStatus } from "../../common";
-import * as db from "../db";
-import { getClient } from "../services/validatorClient";
+import { prysmBinary } from "../prysm";
 
-export async function getBinaryStatus(): Promise<ChildProcessStatus | null> {
-  const client = db.server.validatorClient.get();
-  if (!client) return null;
-  else return getClient(client).getStatus();
+export async function getBinaryStatus(): Promise<ChildProcessStatus> {
+  return prysmBinary.getStatus();
 }

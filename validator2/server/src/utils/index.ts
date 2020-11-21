@@ -1,5 +1,4 @@
 export * from "./Supervisor";
-export * from "./beaconProviderUrl";
 export * from "./depositEvent";
 export * from "./express";
 export * from "./fetch";

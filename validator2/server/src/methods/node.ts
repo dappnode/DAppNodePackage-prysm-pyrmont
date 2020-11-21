@@ -1,15 +1,11 @@
 import memoizee from "memoizee";
-import { NodeStats, BeaconProviderName } from "../../common";
-import * as db from "../db";
-import { getBeaconNodeClient } from "../services/beaconNode";
+import { NodeStats } from "../../common";
+import { prysmBeaconNodeClient } from "../prysm";
 
-async function getNodeStats(
-  beaconNode: BeaconProviderName
-): Promise<NodeStats> {
-  const beaconNodeClient = getBeaconNodeClient(beaconNode);
+async function getNodeStats(): Promise<NodeStats> {
   return {
-    syncing: await beaconNodeClient.syncing(),
-    peers: await beaconNodeClient.peers()
+    syncing: await prysmBeaconNodeClient.syncing(),
+    peers: await prysmBeaconNodeClient.peers()
   };
 }
 
@@ -19,12 +15,5 @@ const getNodeStatsMem = memoizee(getNodeStats, {
 });
 
 export async function nodeStats(): Promise<NodeStats> {
-  const beaconNode = db.server.beaconProvider.get();
-  if (!beaconNode)
-    return {
-      syncing: null,
-      peers: null
-    };
-
-  return await getNodeStatsMem(beaconNode);
+  return await getNodeStatsMem();
 }
