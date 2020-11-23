@@ -19,7 +19,7 @@ services:
   validator:
     image: "validator.prysm-pyrmont.dnp.dappnode.eth:1.0.0"
     build:
-      context: validator-ui-prysm
+      context: validator
       args:
         UPSTREAM_VERSION: v1.0.0-beta.3
     volumes:
