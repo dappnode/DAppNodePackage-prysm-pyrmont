@@ -6,7 +6,6 @@ echo "$WALLET_PASSWORD" > /root/.eth2wallets/wallet-password.txt
 exec validator \
   --pyrmont \
   --datadir=/root/.eth2 \
-  --log-file=/root/.eth2/validator.log \
   --rpc-host 0.0.0.0 \
   --grpc-gateway-host 0.0.0.0 \
   --monitoring-host 0.0.0.0 \

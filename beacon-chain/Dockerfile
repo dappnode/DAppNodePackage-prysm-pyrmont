@@ -27,7 +27,6 @@ RUN /usr/local/bin/beacon-chain --version
 ENTRYPOINT [ "sh", "-c", "exec beacon-chain \
   --pyrmont \
   --datadir=/data \
-  --log-file=/data/beacon-chain.log \
   --rpc-host=0.0.0.0 \
   --grpc-gateway-host=0.0.0.0 \
   --monitoring-host=0.0.0.0 \
