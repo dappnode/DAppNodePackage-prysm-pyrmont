@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   beacon-chain:
-    image: "beacon-chain.prysm-pyrmont.dnp.dappnode.eth:1.0.0"
+    image: "beacon-chain.prysm-pyrmont.dnp.dappnode.eth:0.1.0"
     build:
       context: beacon-chain
       args:
@@ -17,7 +17,7 @@ services:
       CORSDOMAIN: "http://prysm-pyrmont.dappnode"
       EXTRA_OPTS: ""
   validator:
-    image: "validator.prysm-pyrmont.dnp.dappnode.eth:1.0.0"
+    image: "validator.prysm-pyrmont.dnp.dappnode.eth:0.1.0"
     build:
       context: validator
       args:
