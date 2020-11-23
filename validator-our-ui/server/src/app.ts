@@ -10,7 +10,6 @@ import * as db from "./db";
 import * as auth from "./auth";
 import { uiFilesPath, serverPort, logDebug } from "./params";
 import { getRpcHandler, wrapRoute, wrapMiddleware } from "./utils";
-import { downloadKeystoresBackup } from "./routes/backup";
 // Display stack traces with source-maps
 import "source-map-support/register";
 const FileStore = require("session-file-store")(session);
@@ -40,7 +39,6 @@ app.get("/login", wrapRoute(auth.onlyAdmin));
 app.post("/login", wrapRoute(auth.loginAdmin));
 app.get("/logout", wrapRoute(auth.logoutAdmin));
 app.post("/rpc", wrapMiddleware(auth.onlyAdmin), getRpcHandler(methods));
-app.get("/backup", wrapMiddleware(auth.onlyAdmin), downloadKeystoresBackup);
 app.get("/ping", (req, res) => res.send(`DAppNode Prysm dashboard`));
 app.get("*", (_0, res) =>
   res.sendFile(path.resolve(uiFilesPath, "index.html"))

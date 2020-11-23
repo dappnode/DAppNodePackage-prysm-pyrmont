@@ -96,9 +96,6 @@ export const prysmKeystoreManager = {
     return [];
   },
 
-  // Stream prysm backup command directly to express.res
-  async getBackup(): Promise<Zip> {},
-
   /**
    * Import multiple validators with the same secret
    *

@@ -1,0 +1,13 @@
+version: "2"
+fields:
+  - id: WALLET_PASSWORD
+    target:
+      type: environment
+      name: WALLET_PASSWORD
+      service: validator
+    title: Wallet password
+    description: >-
+      Enter the wallet password for your internal Prysm wallet.
+      Must be the exact same password that you enter in the onboarding flow on the Prysm web UI
+    secret: true
+    required: true
