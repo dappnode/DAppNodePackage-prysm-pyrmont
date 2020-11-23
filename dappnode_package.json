@@ -25,6 +25,7 @@
   },
   "categories": ["Blockchain"],
   "links": {
+    "ui": "http://prysm-pyrmont.dappnode/",
     "homepage": "https://prylabs.net/participate?node=dappnode",
     "readme": "https://github.com/dappnode/DAppNodePackage-prysm-pyrmont",
     "prysm": "https://prylabs.net"
