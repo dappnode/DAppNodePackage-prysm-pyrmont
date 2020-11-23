@@ -14,6 +14,7 @@ services:
     restart: always
     environment:
       HTTP_WEB3PROVIDER: "http://goerli-geth.dappnode:8545"
+      CORSDOMAIN: "http://prysm-pyrmont.dappnode"
       EXTRA_OPTS: ""
   validator:
     image: "validator.prysm-pyrmont.dnp.dappnode.eth:1.0.0"
