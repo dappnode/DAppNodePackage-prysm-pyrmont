@@ -1,18 +1,22 @@
-FROM debian:buster-slim as binary
+FROM gcr.io/prysmaticlabs/prysm/beacon-chain:latest as build
 
-ARG TARGETARCH
-ARG UPSTREAM_VERSION
-ENV DOWNLOAD_URL https://github.com/prysmaticlabs/prysm/releases/download
+# FROM debian:buster-slim as binary
 
-RUN DEBIAN_FRONTEND=noninteractive \
-    apt update && apt install --assume-yes --no-install-recommends wget ca-certificates && \
-    wget -q $DOWNLOAD_URL/$UPSTREAM_VERSION/beacon-chain-$UPSTREAM_VERSION-linux-${TARGETARCH:-amd64} -O /usr/local/bin/beacon-chain && \
-    chmod +x  /usr/local/bin/beacon-chain
+# ARG TARGETARCH
+# ARG UPSTREAM_VERSION
+# ENV DOWNLOAD_URL https://github.com/prysmaticlabs/prysm/releases/download
+
+# RUN DEBIAN_FRONTEND=noninteractive \
+#     apt update && apt install --assume-yes --no-install-recommends wget ca-certificates && \
+#     wget -q $DOWNLOAD_URL/$UPSTREAM_VERSION/beacon-chain-$UPSTREAM_VERSION-linux-${TARGETARCH:-amd64} -O /usr/local/bin/beacon-chain && \
+#     chmod +x  /usr/local/bin/beacon-chain
 
 FROM debian:buster-slim
 
 #Copy binaries from build stage
-COPY --from=binary /usr/local/bin/beacon-chain /usr/local/bin/beacon-chain
+# COPY --from=binary /usr/local/bin/beacon-chain /usr/local/bin/beacon-chain
+COPY --from=build /app/beacon-chain/beacon-chain.runfiles/prysm/beacon-chain/beacon-chain_/beacon-chain /usr/local/bin
+
 
 RUN apt update && \
     apt install -y ca-certificates file && \
