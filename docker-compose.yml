@@ -1,37 +1,35 @@
-version: '3.4'
+version: "3.4"
 services:
   beacon-chain:
-    image: 'beacon-chain.prysm-pyrmont.dnp.dappnode.eth:1.0.0'
+    image: "beacon-chain.prysm-pyrmont.dnp.dappnode.eth:1.0.0"
     build:
       context: beacon-chain
       args:
         UPSTREAM_VERSION: v1.0.0-beta.3
     volumes:
-      - 'beacon-chain-data:/data'
+      - "beacon-chain-data:/data"
     ports:
-      - '13000'
-      - '12000'
+      - "13000"
+      - "12000"
     restart: always
     environment:
-      HTTP_WEB3PROVIDER: 'http://goerli-geth.dappnode:8545'
-      EXTRA_OPTS: ''
+      HTTP_WEB3PROVIDER: "http://goerli-geth.dappnode:8545"
+      EXTRA_OPTS: ""
   validator:
-    image: 'validator.prysm-pyrmont.dnp.dappnode.eth:1.0.0'
+    image: "validator.prysm-pyrmont.dnp.dappnode.eth:1.0.0"
     build:
       context: validator-ui-prysm
       args:
         UPSTREAM_VERSION: v1.0.0-beta.3
     volumes:
-      - 'validator-data:/root/'
-    ports:
-      - '4200:80'
+      - "validator-data:/root/"
     restart: always
     environment:
-      BEACON_RPC_PROVIDER: 'beacon-chain:4000'
-      BEACON_RPC_GATEWAY_PROVIDER: 'beacon-chain:3500'
+      BEACON_RPC_PROVIDER: "beacon-chain.prysm-pyrmont.dappnode:4000"
+      BEACON_RPC_GATEWAY_PROVIDER: "beacon-chain.prysm-pyrmont.dappnode:3500"
       GRAFFITI: validating_from_DAppNode
-      EXTRA_OPTS: ''
-      WALLET_PASSWORD: ''
+      EXTRA_OPTS: ""
+      WALLET_PASSWORD: ""
 volumes:
   beacon-chain-data: {}
   validator-data: {}
