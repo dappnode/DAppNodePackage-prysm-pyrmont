@@ -17,6 +17,5 @@ exec validator \
   --web \
   --grpc-gateway-host=0.0.0.0 \
   --grpc-gateway-port=80 \
-  --grpc-gateway-corsdomain=http://prysm-pyrmont-validator.dappnode \
   --accept-terms-of-use \
   $EXTRA_OPTS
