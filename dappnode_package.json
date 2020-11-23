@@ -21,7 +21,7 @@
     "url": "https://github.com/dappnode/DAppNodePackage-prysm-pyrmont/issues"
   },
   "requirements": {
-    "minimumDappnodeVersion": "0.2.20"
+    "minimumDappnodeVersion": "0.2.39"
   },
   "categories": ["Blockchain"],
   "links": {
