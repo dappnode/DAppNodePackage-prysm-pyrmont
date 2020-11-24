@@ -30,7 +30,6 @@ services:
       BEACON_RPC_GATEWAY_PROVIDER: "beacon-chain.prysm-pyrmont.dappnode:3500"
       GRAFFITI: validating_from_DAppNode
       EXTRA_OPTS: ""
-      WALLET_PASSWORD: ""
 volumes:
   beacon-chain-data: {}
   validator-data: {}
