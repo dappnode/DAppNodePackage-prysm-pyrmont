@@ -23,6 +23,13 @@
   "requirements": {
     "minimumDappnodeVersion": "0.2.39"
   },
+  "backup": [
+    {
+      "name": "eth2validators",
+      "path": "/root/.eth2validators",
+      "service": "validator"
+    }
+  ],
   "categories": ["Blockchain"],
   "links": {
     "ui": "http://prysm-pyrmont.dappnode/",
