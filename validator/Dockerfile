@@ -16,7 +16,7 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/*
 
 #Copy binaries from build stage
-COPY --from=binary /app/validator/validator.runfiles/prysm/validator/validator_/validator /usr/local/bin
+COPY --from=binary /usr/local/bin/validator /usr/local/bin
 
 # Verify binary is in correct arch
 RUN /usr/local/bin/validator --version
