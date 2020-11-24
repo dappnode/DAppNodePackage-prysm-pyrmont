@@ -5,12 +5,12 @@ services:
     build:
       context: beacon-chain
       args:
-        UPSTREAM_VERSION: v1.0.0-beta.3
+        UPSTREAM_VERSION: v1.0.0
     volumes:
       - "beacon-chain-data:/data"
     ports:
       - "13000"
-      - "12000"
+      - "12000/udp"
     restart: always
     environment:
       HTTP_WEB3PROVIDER: "http://goerli-geth.dappnode:8545"
@@ -21,7 +21,7 @@ services:
     build:
       context: validator
       args:
-        UPSTREAM_VERSION: v1.0.0-beta.3
+        UPSTREAM_VERSION: v1.0.0
     volumes:
       - "validator-data:/root/"
     restart: always
