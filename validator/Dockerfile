@@ -18,7 +18,22 @@ RUN apt update && \
 #Copy binaries from build stage
 COPY --from=validator /app/validator/validator.runfiles/prysm/validator/validator_/validator /usr/local/bin
 
+# Verify binary is in correct arch
 RUN /usr/local/bin/validator --version
-COPY entrypoint.sh .
 
-ENTRYPOINT [ "./entrypoint.sh" ]
+ENTRYPOINT [ "sh", "-c", "exec validator \
+  --pyrmont \
+  --datadir=/root/.eth2 \
+  --rpc-host 0.0.0.0 \
+  --grpc-gateway-host 0.0.0.0 \
+  --monitoring-host 0.0.0.0 \
+  --beacon-rpc-provider=$BEACON_RPC_PROVIDER \
+  --beacon-rpc-gateway-provider=$BEACON_RPC_GATEWAY_PROVIDER \
+  --wallet-dir=/root/.eth2validators \
+  --wallet-password-file=/root/.eth2wallets/wallet-password.txt \
+  --graffiti=$GRAFFITI \
+  --web \
+  --grpc-gateway-host=0.0.0.0 \
+  --grpc-gateway-port=80 \
+  --accept-terms-of-use \
+  $EXTRA_OPTS" ]

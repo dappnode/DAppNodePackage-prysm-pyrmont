@@ -1,23 +1,5 @@
 version: "2"
 fields:
-  - id: WALLET_PASSWORD
-    target:
-      type: environment
-      name: WALLET_PASSWORD
-      service: validator
-    title: Wallet password
-    description: >-
-      Enter the wallet password for your internal Prysm wallet.
-      Must be the exact same password that you enter in the onboarding flow on the Prysm web UI.
-
-      - Must be at least 8 characters long
-      - Must include at least 1 number
-      - Must include at least 1 special character
-    secret: true
-    required: true
-    pattern: ^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?!])[A-Za-z\d@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?!]{8,}$
-    patternErrorMessage: Must match password requirements and be a strong password
-
   - id: GRAFFITI
     target:
       type: environment
@@ -26,3 +8,11 @@ fields:
     title: Graffiti
     description: >-
       Add a string to your proposed blocks, which will be seen on the block explorer
+  - id: HTTP_WEB3PROVIDER
+    target:
+      type: environment
+      name: HTTP_WEB3PROVIDER
+      service: beacon-chain
+    title: Eth1.x node URL
+    description: >-
+      URL to the Eth1.x node need for the Beacon chain.

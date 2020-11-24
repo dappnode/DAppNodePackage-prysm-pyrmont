@@ -1,6 +1,6 @@
 {
   "name": "prysm-pyrmont.dnp.dappnode.eth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "upstreamVersion": "v1.0.0-beta.3",
   "upstreamRepo": "prysmaticlabs/prysm",
   "upstreamArg": "UPSTREAM_VERSION",
@@ -21,10 +21,18 @@
     "url": "https://github.com/dappnode/DAppNodePackage-prysm-pyrmont/issues"
   },
   "requirements": {
-    "minimumDappnodeVersion": "0.2.20"
+    "minimumDappnodeVersion": "0.2.39"
   },
+  "backup": [
+    {
+      "name": "eth2validators",
+      "path": "/root/.eth2validators",
+      "service": "validator"
+    }
+  ],
   "categories": ["Blockchain"],
   "links": {
+    "ui": "http://prysm-pyrmont.dappnode/",
     "homepage": "https://prylabs.net/participate?node=dappnode",
     "readme": "https://github.com/dappnode/DAppNodePackage-prysm-pyrmont",
     "prysm": "https://prylabs.net"
