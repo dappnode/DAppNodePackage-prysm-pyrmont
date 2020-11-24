@@ -31,6 +31,7 @@ ENTRYPOINT [ "sh", "-c", "exec validator \
   --beacon-rpc-gateway-provider=$BEACON_RPC_GATEWAY_PROVIDER \
   --wallet-dir=/root/.eth2validators \
   --wallet-password-file=/root/.eth2wallets/wallet-password.txt \
+  --write-wallet-password-on-web-onboarding \
   --graffiti=$GRAFFITI \
   --web \
   --grpc-gateway-host=0.0.0.0 \
