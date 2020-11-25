@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   beacon-chain:
-    image: "beacon-chain.prysm-pyrmont.dnp.dappnode.eth:0.1.3"
+    image: "beacon-chain.prysm-pyrmont.dnp.dappnode.eth:0.1.4"
     build:
       context: beacon-chain
       args:
@@ -10,14 +10,14 @@ services:
       - "beacon-chain-data:/data"
     ports:
       - "13000"
-      - "12000/udp"
+      - 12000/udp
     restart: always
     environment:
       HTTP_WEB3PROVIDER: "http://goerli-geth.dappnode:8545"
       CORSDOMAIN: "http://prysm-pyrmont.dappnode"
       EXTRA_OPTS: ""
   validator:
-    image: "validator.prysm-pyrmont.dnp.dappnode.eth:0.1.3"
+    image: "validator.prysm-pyrmont.dnp.dappnode.eth:0.1.4"
     build:
       context: validator
       args:
