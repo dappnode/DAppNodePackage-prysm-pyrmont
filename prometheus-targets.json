@@ -1,0 +1,20 @@
+[
+    {
+        "labels": {
+            "package": "prysm-pyrmont.dnp.dappnode.eth",
+            "service": "beacon-chain.prysm-pyrmont.dappnode"
+        },
+        "targets": [
+            "beacon-chain.prysm-pyrmont.dappnode:8080"
+        ]
+    },
+    {
+        "labels": {
+            "package": "prysm-pyrmont.dnp.dappnode.eth",
+            "service": "validator.prysm-pyrmont.dappnode"
+        },
+        "targets": [
+            "validator.prysm-pyrmont.dappnode:8081"
+        ]
+    }
+]
