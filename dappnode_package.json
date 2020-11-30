@@ -1,6 +1,6 @@
 {
   "name": "prysm-pyrmont.dnp.dappnode.eth",
-  "version": "0.1.5",
+  "version": "0.1.8",
   "upstreamVersion": "v1.0.2",
   "upstreamRepo": "prysmaticlabs/prysm",
   "upstreamArg": "UPSTREAM_VERSION",
