@@ -20,10 +20,8 @@ RUN apt update && \
 
 ADD ssl /ssl/
 
-# Verify binary is in correct arch
-RUN /usr/local/bin/beacon-chain --version
-
-ENTRYPOINT [ "sh", "-c", "exec beacon-chain \
+ENTRYPOINT [ "sh", "-c", "echo \"0.0.0.0 beacon.prysm-pyrmont.dappnode\" >> /etc/hosts && \
+  exec beacon-chain \
   --pyrmont \
   --datadir=/data \
   --rpc-host=0.0.0.0 \

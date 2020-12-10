@@ -8,3 +8,6 @@
 Validate with prysm: a Go implementation of the Ethereum 2.0 Serenity protocol and open source project created by Prysmatic Labs. Beacon node which powers the beacon chain at the core of Ethereum 2.0
 
 ![avatar](avatar-prysm-pyrmont.png)
+
+
+Grafana dashboard thanks to the amazing work of [metanull-operator](https://github.com/metanull-operator/eth2-grafana)

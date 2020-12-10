@@ -18,11 +18,10 @@ RUN apt update && \
 #Copy binaries from build stage
 COPY --from=binary /usr/local/bin/validator /usr/local/bin
 
-# Verify binary is in correct arch
-RUN /usr/local/bin/validator --version
 
 # Must used escaped \"$VAR\" to accept spaces: --graffiti=\"$GRAFFITI\"
-ENTRYPOINT [ "sh", "-c", "exec validator \
+ENTRYPOINT [ "sh", "-c", "echo \"0.0.0.0 validator.prysm-pyrmont.dappnode\" >> /etc/hosts && \
+  exec validator \
   --pyrmont \
   --datadir=/root/.eth2 \
   --rpc-host 0.0.0.0 \
