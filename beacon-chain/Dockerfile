@@ -20,13 +20,12 @@ RUN apt update && \
 
 ADD ssl /ssl/
 
-ENTRYPOINT [ "sh", "-c", "echo \"0.0.0.0 beacon.prysm-pyrmont.dappnode\" >> /etc/hosts && \
-  exec beacon-chain \
+ENTRYPOINT [ "sh", "-c", "exec beacon-chain \
   --pyrmont \
   --datadir=/data \
   --rpc-host=0.0.0.0 \
   --grpc-gateway-host=0.0.0.0 \
-  --monitoring-host=beacon-chain.prysm-pyrmont.dappnode \
+  --monitoring-host=0.0.0.0 \
   --http-web3provider=\"$HTTP_WEB3PROVIDER\" \
   --grpc-gateway-port=3500 \
   --grpc-gateway-corsdomain=\"$CORSDOMAIN\" \
